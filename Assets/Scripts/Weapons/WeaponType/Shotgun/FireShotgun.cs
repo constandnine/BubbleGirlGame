@@ -52,13 +52,12 @@ public class FireShotgun : BaseWeapon
                 }
 
 
-                weaponAudio.clip = pumpShotgun;
-                weaponAudio.Play();
-               // weaponAudio.clip = null;
-
-
                 // Starts the reload procces.
                 StartCoroutine(FireCoolDown());
+
+
+                weaponAudio.clip = pumpShotgun;
+                weaponAudio.Play();
             }
         }
     }

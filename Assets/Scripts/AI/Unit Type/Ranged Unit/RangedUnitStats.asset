@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e466cb9daefd5b4a981a34d0d34284d, type: 3}
+  m_Name: RangedUnitStats
+  m_EditorClassIdentifier: 
+  _agent: {fileID: 0}
+  _player: {fileID: 3490121509115833844, guid: ec05db1f103cd1445be1245df37e726c, type: 3}
+  _damage: 0
+  _health: 0
+  _Hitsound: {fileID: 0}
+  _attackSound: {fileID: 0}
+  _deathSound: {fileID: 0}

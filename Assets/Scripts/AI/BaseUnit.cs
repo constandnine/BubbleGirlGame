@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaseUnit : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class BaseUnit : MonoBehaviour
     private float _distanceToPlayer;
     public float distanceToPlayer { get { return _distanceToPlayer; } set { _distanceToPlayer = value; } }
 
+    [SerializeField] private NavMeshAgent _agent;
+    public NavMeshAgent agent { get { return _agent; } set { _agent = value; } }
+
 
     [Header("Sound")]
 
@@ -23,6 +27,9 @@ public class BaseUnit : MonoBehaviour
     private void Start()
     {
         unitAudio = GetComponent<AudioSource>();
+
+
+       //agent = GetComponent<NavMeshAgent>();
 
 
         thisUnitsHealth = unitStatistics.health;
@@ -38,18 +45,10 @@ public class BaseUnit : MonoBehaviour
         MoveToPlayer();
 
 
-
-
         if (thisUnitsHealth < 1)
         {
             KillUnit();
         }
-    }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        // deal Damage
     }
 
 
@@ -73,7 +72,7 @@ public class BaseUnit : MonoBehaviour
 
     private void KillUnit()
     {
-
+        Destroy(gameObject);
     }
 
 }

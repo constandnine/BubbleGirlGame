@@ -10,29 +10,54 @@ public class RangedUnit : BaseUnit
     [SerializeField] private float attackDistanceToPlayer;
     [SerializeField] private float minimalDistanceToPlayer;
 
+
     [Header("Projectile")]
 
+    [SerializeField] private Transform throwPoint;
+
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject projectile;
 
     [SerializeField] private float throwForce;
     [SerializeField] private float upwardForce;
 
+    [SerializeField] private float range;
+    private  float distanceToProjectile;
 
-/*    public override void MoveToPlayer()
-    {
-        if (distanceToPlayer > minimalDistanceToPlayer)
+
+    [Header("SHooting")]
+
+    [SerializeField] private float timeBetweenShots;
+
+    private bool canShoot = true;
+
+    private ProjectileManager projectileManager;
+
+
+
+
+
+    /*    public override void MoveToPlayer()
         {
-          //  unitStatistics.agent.SetDestination(unitStatistics.player.position);
-        }
-    }*/
+            transform.LookAt(player);
+            
+            
+            if (distanceToPlayer > minimalDistanceToPlayer)
+            {
+                unitStatistics.agent.SetDestination(unitStatistics.player.position);
+            }
+        }*/
 
 
     public override void Attack()
     {
-        if (distanceToPlayer <= attackDistanceToPlayer)
+        if (distanceToPlayer <= attackDistanceToPlayer && projectile == null && canShoot == true)
         {
             //Spawns the projectile
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            projectile = Instantiate(projectilePrefab, throwPoint.position, transform.rotation);
+
+
+            projectileManager = projectile.GetComponent<ProjectileManager>();
 
 
             //Gets the rigidBody of the Projectile
@@ -45,6 +70,38 @@ public class RangedUnit : BaseUnit
 
             // Adds force to the projectile.
             rb.AddForce(throwDirection, ForceMode.Impulse);
+
+
+            
+            canShoot = false;
         }
+
+        if (projectile != null)
+        {
+            distanceToProjectile = Vector3.Distance(projectile.transform.position, transform.position);
+
+
+            if (distanceToProjectile > range)
+            {
+                projectileManager.DestroyProjectile();
+
+
+                projectile = null;
+
+
+                StopCoroutine(ShootCoolDown());
+
+                StartCoroutine(ShootCoolDown());
+            }
+        }
+    }
+
+
+    private IEnumerator ShootCoolDown()
+    {
+        yield return new WaitForSeconds(timeBetweenShots);
+
+
+        canShoot = true;
     }
 }
